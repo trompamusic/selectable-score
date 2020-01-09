@@ -19,6 +19,7 @@ class TestApp extends Component {
   render() {
     <div>This is a minimal example demonstrating the use of the TROMPA selectableScore component.
       <SelectableScore uri={ MEI_URI } options={ vrvOptions } />
+    </div>
   }
 }
 
