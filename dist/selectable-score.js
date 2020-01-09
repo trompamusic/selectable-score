@@ -18,10 +18,10 @@ class SelectableScore extends Component {
   constructor(props) { 
     super(props);
     this.state = { 
-      vrvOptions: vrvOptions in this.props 
+      vrvOptions: "vrvOptions" in this.props 
         ? this.props.vrvOptions 
         : defaultVrvOptions,
-      selectorString: selectorString in this.props 
+      selectorString: "selectorString" in this.props 
         ? this.props.selectorString
         : defaultSelectors,
       selection: []
