@@ -15,7 +15,7 @@ To use the component in your project:
 
 The `<SelectableScore>` component accepts the following props:
 
-`vrvOptions` (*optional*): a JSON object containing layout options to pass on to Verovio. If not specified, uses these defaults:
+* `vrvOptions` (*optional*): a JSON object containing layout options to pass on to Verovio. If not specified, uses these defaults:
 
 ```
 { 
@@ -31,18 +31,20 @@ The `<SelectableScore>` component accepts the following props:
 [More information on Verovio options here](https://verovio.org/javascript.xhtml).
 
 
-`selectionString` (*optional*): specifies the CSS selector used by DragSelect for click-and-drag selections. Any valid CSS selector acceptable; if not specified, defaults to `.note`.
+* `selectionString` (*optional*): specifies the CSS selector used by DragSelect for click-and-drag selections. Any valid CSS selector acceptable; if not specified, defaults to `.note`.
 
-`onSelectionChange` (*required*): a callback to your application's selection handler. 
+* `onSelectionChange` (*required*): a callback to your application's selection handler. 
 
 ## Test application
 
 This repository also contains a minimal example React application integrating the selectable-score component. To run it, clone this repository, then:
-`cd selectable-score
+```
+cd selectable-score
 
 npm install
 
 npm start`
+```
 
 Now point your web browser at https://localhost:8080. Wait a few moments for Verovio to render the score. 
 
