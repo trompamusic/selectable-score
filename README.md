@@ -11,13 +11,14 @@ This component is intended to serve various score-centric applications of the [T
 
 To use the component in your project:
 
-``import SelectableScore from 'selectable-score/dist/selectable-score'``
+`import SelectableScore from 'selectable-score/dist/selectable-score'`
 
-The component accepts the following props:
+The `<SelectableScore>` component accepts the following props:
 
 `vrvOptions` (*optional*): a JSON object containing layout options to pass on to Verovio. If not specified, uses these defaults:
 
-```{ 
+```
+{ 
   scale: 45,
   adjustPageHeight: 1,
   pageHeight: 2500,
