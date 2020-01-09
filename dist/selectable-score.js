@@ -23,8 +23,7 @@ class SelectableScore extends Component {
         : defaultVrvOptions,
       selectorString: "selectorString" in this.props 
         ? this.props.selectorString
-        : defaultSelectorString,
-      selection: []
+        : defaultSelectorString
     }
     this.enableSelector = this.enableSelector.bind(this);
   }
@@ -45,17 +44,13 @@ class SelectableScore extends Component {
       },
       callback: (elements) => {
         document.body.classList.remove('s-noselect');
-        this.handleSelectionChange(elements);
+        this.props.onSelectionChange(elements);
       }
     });
     console.log("About to set selector: ", selector);
     this.setState({selector: selector});
   }
   
-  handleSelectionChange(selection) {
-    this.setState({selection: selection})
-  }
-
   componentDidMount() { 
     // horrible hack to allow SVG to be loaded into DOM first
     setTimeout(this.enableSelector, 1000)
