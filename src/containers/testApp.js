@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux' ;
-import Score from 'selectable-score/dist/score'
+import SelectableScore from 'selectable-score/dist/selectable-score';
 
 const MEI_URI = "test.mei"
 const vrvOptions = { 
@@ -12,14 +12,17 @@ const vrvOptions = {
   unit: 6
 }
 
-class TestApp extends Component { 
+export default class TestApp extends Component { 
   constructor(props) { 
     super(props);
   }
+
   render() {
-    <div>This is a minimal example demonstrating the use of the TROMPA selectableScore component.
-      <SelectableScore uri={ MEI_URI } options={ vrvOptions } />
-    </div>
+    return(
+      <div><p>This is a minimal example demonstrating the use of the TROMPA selectable-score component.</p>
+        <SelectableScore uri={ MEI_URI } options={ vrvOptions } />
+      </div>
+    )
   }
 }
 

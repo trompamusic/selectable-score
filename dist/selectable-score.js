@@ -8,7 +8,7 @@ const defaultVrvOptions = {
   adjustPageHeight: 1,
   pageHeight: 2500,
   pageWidth: 2200,
-  noFooter: 1,
+  footer: "none",
   unit: 6
 }
 
@@ -23,7 +23,7 @@ class SelectableScore extends Component {
         : defaultVrvOptions,
       selectorString: "selectorString" in this.props 
         ? this.props.selectorString
-        : defaultSelectors,
+        : defaultSelectorString,
       selection: []
     }
     this.enableSelector = this.enableSelector.bind(this);

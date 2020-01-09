@@ -1,0 +1,179 @@
+body { 
+  font-family: sans-serif;
+}
+
+.videoWrapper { 
+  max-width:945px;
+  margin-left:20px;
+}
+
+.active { 
+  fill:darkorange;
+  stroke:darkorange;
+}
+
+.deleted {
+  fill: #00aaff;
+  stroke: #00aaff;
+}
+
+.wasActive{ 
+  fill:black;
+  stroke:black;
+  -webkit-animation-name: wasActive; /* Safari 4.0 - 8.0 */
+  -webkit-animation-duration:0.3s; /* Safari 4.0 - 8.0 */
+  animation-name: wasActive;
+  animation-duration:0.43;
+}
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes wasActive { 
+  from{fill:darkorange; stroke:darkorange}
+  to{fill:black; stroke:black;}
+}
+
+@keyframes wasActive { 
+  from{fill:darkorange; stroke:darkorange}
+  to{fill:#663300; stroke:#663300;}
+}
+
+.clickableBoundedInstant{
+  cursor:pointer;
+}
+
+.scorepane { 
+  min-height: 460px;
+  max-height: 460px;
+}
+
+.errorDetected { 
+  fill:black;
+  stroke:black;
+  -webkit-animation-name: errorDetected; /* Safari 4.0 - 8.0 */
+  -webkit-animation-duration:0.3s; /* Safari 4.0 - 8.0 */
+  animation-name: errorDetected;
+  animation-duration:0.3s;
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes errorDetected { 
+  from {fill:black; stroke:black;}
+  to {fill:red; stroke:red;}
+}
+
+@keyframes errorDetected { 
+  from {fill:black; stroke:black;}
+  to {fill:red; stroke:red;}
+}
+
+#pageControlsWrapper {
+  border-radius: 10px;
+  border: 1px solid rgb(255,102,0);
+  max-width: 945px;
+  margin-left: 20px;
+  height: 1.3em;
+  display: flex;
+  justify-content: space-between;
+  padding-left: .3em;
+  padding-right: .3em;
+  font-weight: bold;
+  color: rgba(255, 102, 0);
+}
+
+#pageControlsWrapper.following{
+  background: rgb(255,102,0);
+  background: linear-gradient(90deg, rgba(255,102,0,1) 0%, rgba(223,157,7,1) 50%, rgba(255,102,0,1) 100%);
+  color:white;
+}
+
+#pageControlsWrapper #prev, #pageControlsWrapper #next { 
+  margin-top:.1em;
+  cursor:pointer;
+}
+
+#pageControlsWrapper #prev.following, #pageControlsWrapper #next.following { 
+  visibility: hidden;
+}
+
+#selectWrapper { 
+  clear:both;
+  margin-left:20px;
+  padding-top:20px;
+  padding-bottom:20px;
+}
+
+.loadingMsg { 
+  margin-left:20px;
+}
+
+#logoWrapper { 
+  margin-bottom: -15px;
+  display: flex;
+  justify-content: space-between;
+  max-width: 950px;
+  margin-left: 20px;
+  z-index:-2;
+}
+
+#logoWrapper #trompaLogo { 
+  height:32px;
+  margin-top:20px;
+}
+
+#logoWrapper #mdwLogo { 
+  height:64px;
+}
+
+
+.scoreOptionsWrapper {
+  width:550px;
+  margin-left:550px;
+  position:absolute;
+  font-size: 0.5em;
+  background:#c4e5ffbb; 
+  border: 1px solid black;
+  z-index: 1;
+}
+
+.scoreOptions {
+  height:500px;
+  overflow-y:scroll;
+}
+
+.hidden{
+  display: none;
+}
+
+.scoreOptionsEntry {
+  margin-bottom:2px;
+  margin-top:2px;
+  background-color: #b9d9ffbb;
+}
+
+.scoreOptionsKey {
+  float:left;
+  padding-top:.5em;
+  min-width:50%;
+}
+
+.scoreOptionsValue {
+  min-width:50%;
+}
+
+.selectionPreferences{
+  position:absolute;
+  top:60px;
+}
+
+.selected {
+  fill:darkorange;
+  stroke:darkorange;
+}
+
+#annotationControls {
+  position:absolute;
+  top:80px;
+  left:650px;
+}
+
+#annotationControls input {
+  margin-left: 15px;
