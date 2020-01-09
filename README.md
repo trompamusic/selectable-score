@@ -9,11 +9,38 @@ The MELD score is itself a wrapper around the [Verovio](https://verovio.org) MEI
 
 This component is intended to serve various score-centric applications of the [TROMPA project](https://trompamusic.eu).
 
+To use the component in your project:
+
+``import SelectableScore from 'selectable-score/dist/selectable-score'``
+
+The component accepts the following props:
+
+`vrvOptions` (*optional*): a JSON object containing layout options to pass on to Verovio. If not specified, uses these defaults:
+
+```{ 
+  scale: 45,
+  adjustPageHeight: 1,
+  pageHeight: 2500,
+  pageWidth: 2200,
+  footer: "none",
+  unit: 6
+}
+```
+
+[More information on Verovio options here](https://verovio.org/javascript.xhtml).
+
+
+`selectionString` (*optional*): specifies the CSS selector used by DragSelect for click-and-drag selections. Any valid CSS selector acceptable; if not specified, defaults to `.note`.
+
+`onSelectionChange` (*required*): a callback to your application's selection handler. 
+
 ## Test application
 
 This repository also contains a minimal example React application integrating the selectable-score component. To run it, clone this repository, then:
 `cd selectable-score
+
 npm install
+
 npm start`
 
 Now point your web browser at https://localhost:8080. Wait a few moments for Verovio to render the score. 
