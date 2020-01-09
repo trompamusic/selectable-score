@@ -5,6 +5,8 @@ The MELD score is itself a wrapper around the [Verovio](https://verovio.org) MEI
 
 * [ISMIR 2017 paper on distributed annotation of musical score](https://ora.ox.ac.uk/objects/uuid:945287f6-5dd3-4424-940c-b919b8ad2768)
 
+* [DLfM 2018 paper on publishing musicology using MELD](https://dl.acm.org/doi/10.1145/3273024.3273038)
+
 * [DLfM 2019 paper on annotating musicological observations using MELD](https://dl.acm.org/doi/10.1145/3358664.3358669)
 
 This component is intended to serve various score-centric applications of the [TROMPA project](https://trompamusic.eu).
