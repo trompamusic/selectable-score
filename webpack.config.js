@@ -10,7 +10,7 @@ module.exports = {
   module: {
     loaders: [{
       exclude: [ 
-        /node_modules\/(?!meld-client)/
+        /node_modules\/(?!(meld-client|selectable-score))/
       ],
       loader: 'babel',
       query: {
