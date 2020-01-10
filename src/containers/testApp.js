@@ -16,7 +16,7 @@ const vrvOptions = {  //
   unit: 6
 }
 // selectionString: CSS selector for all elements to be selectable (e.g. ".measure", ".note")
-const selectionString = ".measure";
+const selectorString = ".measure";
 
 export default class TestApp extends Component { 
   constructor(props) { 
@@ -44,6 +44,7 @@ export default class TestApp extends Component {
           uri={ MEI_URI } 
           options={ vrvOptions } 
           onSelectionChange={ this.handleSelectionChange } 
+          selectorString = { selectorString }
         />
       </div>
     )
