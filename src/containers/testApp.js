@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import SelectableScore from 'selectable-score/dist/selectable-score';
-
+import NextPageButton from 'selectable-score/dist/next-page-button.js';
+import PrevPageButton from 'selectable-score/dist/prev-page-button.js';
 
 // Parameters for SelectableScore component
 // ****************************************
@@ -40,11 +41,21 @@ export default class TestApp extends Component {
           ? <span> { this.state.selection.map( (elem) => elem.getAttribute("id") ).join(", ") } </span>
           : <span>Nothing selected</span>
         }</p>
+
+        <NextPageButton 
+          buttonContent = { <span>Next</span> } 
+          uri = { MEI_URI }
+        />
+        <PrevPageButton 
+          buttonContent = { <span>Prev</span>} 
+          uri = { MEI_URI }
+        />
         <SelectableScore 
           uri={ MEI_URI } 
           options={ vrvOptions } 
           onSelectionChange={ this.handleSelectionChange } 
           selectorString = { selectorString }
+          nextPageButton = { this.nextPageButton }
         />
       </div>
     )
