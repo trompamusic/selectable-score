@@ -30,6 +30,7 @@ class SelectableScore extends Component {
 
   enableSelector() {
     if(!Object.keys(this.props.score.SVG).length) {
+      console.log("Doh!");
       return; // no MEI loaded yet
     }
     if (typeof this.state.selector !== "undefined") {
@@ -47,14 +48,9 @@ class SelectableScore extends Component {
         this.props.onSelectionChange(elements);
       }
     });
-    console.log("About to set selector: ", selector);
     this.setState({selector: selector});
   }
-/*
-  nextPage() { 
-    this.props.scoreNextPageStatic(this.props.uri, this.props.score.pageNum, this.props.score.MEI[this.props.uri]);
-  }
- */ 
+  
   componentDidMount() { 
     // horrible hack to allow SVG to be loaded into DOM first
     setTimeout(() => {
@@ -63,14 +59,9 @@ class SelectableScore extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-   // if(prevProps.nextPageButton !== this.props.nextPageButton) { 
-    /*if(typeof(prevProps.nextPageButton) === "undefined" && typeof(this.props.nextPageButton) !== "undefined") { 
-      console.log("boop!", this.props.nextPageButton);
-      //this.props.nextPageButton.onClick = () => this.nextPage(); 
-    }*/
-    if(prevState.selectors !== this.state.enableSelectors) { 
-      // selectors updated
-      this.enableSelector()
+    if(prevProps.score.latestRenderedPageNum !== this.props.score.latestRenderedPageNum) { 
+      // page turned, re-initialise selectors 
+        this.enableSelector();
     }
   }
 
