@@ -20,7 +20,7 @@ If your application requires paging through the score, additionally import the f
 `import NextPageButton from 'selectable-score/dist/next-page-button';`
 `import PrevPageButton from 'selectable-score/dist/prev-page-button';`
 
-## <SelectableScore> props
+### SelectableScore props
 The `<SelectableScore>` component accepts the following props:
 
 * `vrvOptions` (*optional*): a JSON object containing layout options to pass on to Verovio. If not specified, uses these defaults:
@@ -41,7 +41,8 @@ The `<SelectableScore>` component accepts the following props:
 * `selectionString` (*optional*): specifies the CSS selector used by DragSelect for click-and-drag selections. Any valid CSS selector acceptable; if not specified, defaults to `.note`.
 
 * `onSelectionChange` (*required*): a callback to your application's selection handler. 
-## <NextPageButton> and <PrevPageButton> props
+
+### NextPageButton and PrevPageButton props
 The `<NextPageButton>` and `<PrevPageButton>` components are simple interaction wrappers that attach a click handler for MELD-score-based paging to any HTML (JSX) elements you care to provide -- typically, "Next page" and "Previous page" buttons. They accept the following props: 
   
 * `buttonContent` (*optional*): Your JSX content for the button. This could be as simple as { <span> Next page </span> }. Note that you can attach your own click handlers if your application requires actions beyond the page turn itself to occur on button click (but don't stop the click event's propagation (event.stopPropagation), or the page won't turn). Failure to supply buttonContent will result in an empty component. 
