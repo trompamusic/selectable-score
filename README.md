@@ -5,6 +5,8 @@ The MELD score is itself a wrapper around the [Verovio](https://verovio.org) MEI
 
 This component is intended to serve various score-centric applications of the [TROMPA project](https://trompamusic.eu).
 
+## Usage
+
 To use the component in your project:
 
 `import SelectableScore from 'selectable-score/dist/selectable-score';`
