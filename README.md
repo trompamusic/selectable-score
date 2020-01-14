@@ -58,8 +58,6 @@ Now point your web browser at https://localhost:8080. Wait a few moments for Ver
 
 Click and drag to select MEI elements (in this example, notes); hold down shift or ctrl to select discontinuous regions.
 
-Score layout options and elements to select can be customised; see `src/containers/testApp.js`
-
 ## Known issues
 
 Paging is currently very slow. We're working on improving this, through MELD optimisations and potentially by running Verovio as a Web Worker (work in progress!)
