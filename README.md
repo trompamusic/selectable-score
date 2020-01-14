@@ -11,8 +11,10 @@ To use the component in your project:
 
 If your application requires paging through the score, additionally import the following:
 
-`import NextPageButton from 'selectable-score/dist/next-page-button';`
-`import PrevPageButton from 'selectable-score/dist/prev-page-button';`
+```
+import NextPageButton from 'selectable-score/dist/next-page-button';
+import PrevPageButton from 'selectable-score/dist/prev-page-button';
+```
 
 ### SelectableScore props
 The `<SelectableScore>` component accepts the following props:
