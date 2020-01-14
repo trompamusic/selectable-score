@@ -1,4 +1,7 @@
 # TROMPA selectable-score React component
+
+![Screenshot demonstrating selectable score](selectable-score.png)
+
 This repository contains the selectable-score React component, a wrapper around a [MELD score component](https://github.com/oerc-music/meld-clients-core) that allows for selection of score elements via click-and-drag, built using the [DragSelect](https://github.com/ThibaultJanBeyer/DragSelect) node module. 
 
 The MELD score is itself a wrapper around the [Verovio](https://verovio.org) MEI engraver supporting the incorporation of Linked Data (e.g. Web Annotations). 
