@@ -13,8 +13,14 @@ This component is intended to serve various score-centric applications of the [T
 
 To use the component in your project:
 
-`import SelectableScore from 'selectable-score/dist/selectable-score'`
+`import SelectableScore from 'selectable-score/dist/selectable-score';`
 
+If your application requires paging through the score, additionally import the following:
+
+`import NextPageButton from 'selectable-score/dist/next-page-button';`
+`import PrevPageButton from 'selectable-score/dist/prev-page-button';`
+
+## <SelectableScore> props
 The `<SelectableScore>` component accepts the following props:
 
 * `vrvOptions` (*optional*): a JSON object containing layout options to pass on to Verovio. If not specified, uses these defaults:
@@ -32,10 +38,15 @@ The `<SelectableScore>` component accepts the following props:
 
 [More information on Verovio options here](https://verovio.org/javascript.xhtml).
 
-
 * `selectionString` (*optional*): specifies the CSS selector used by DragSelect for click-and-drag selections. Any valid CSS selector acceptable; if not specified, defaults to `.note`.
 
 * `onSelectionChange` (*required*): a callback to your application's selection handler. 
+## <NextPageButton> and <PrevPageButton> props
+The `<NextPageButton>` and `<PrevPageButton>` components are simple interaction wrappers that attach a click handler for MELD-score-based paging to any HTML (JSX) elements you care to provide -- typically, "Next page" and "Previous page" buttons. They accept the following props: 
+  
+* `buttonContent` (*optional*): Your JSX content for the button. This could be as simple as { <span> Next page </span> }. Note that you can attach your own click handlers if your application requires actions beyond the page turn itself to occur on button click (but don't stop the click event's propagation (event.stopPropagation), or the page won't turn). Failure to supply buttonContent will result in an empty component. 
+
+* `uri` (*required*): Your MEI file's URI. 
 
 ## Test application
 
@@ -53,3 +64,7 @@ Now point your web browser at https://localhost:8080. Wait a few moments for Ver
 Click and drag to select MEI elements (in this example, notes); hold down shift or ctrl to select discontinuous regions.
 
 Score layout options and elements to select can be customised; see `src/containers/testApp.js`
+
+## Known issues
+
+Paging is currently very slow. We're working on improving this, through MELD optimisations and potentially by running Verovio as a Web Worker (work in progress!)
