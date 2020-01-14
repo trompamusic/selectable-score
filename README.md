@@ -50,10 +50,8 @@ The `<NextPageButton>` and `<PrevPageButton>` components are simple interaction 
 This repository also contains a minimal example React application integrating the selectable-score component. To run it, clone this repository, then:
 ```
 cd selectable-score
-
 npm install
-
-npm start`
+npm start
 ```
 
 Now point your web browser at https://localhost:8080. Wait a few moments for Verovio to render the score. 
