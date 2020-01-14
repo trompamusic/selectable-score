@@ -19,7 +19,7 @@ import PrevPageButton from 'selectable-score/dist/prev-page-button';
 ### SelectableScore props
 The `<SelectableScore>` component accepts the following props:
 
-* `vrvOptions` (*optional*): a JSON object containing layout options to pass on to Verovio. If not specified, uses these defaults:
+* `vrvOptions` (*optional*): a JSON object containing layout options to pass on to Verovio. [More information on Verovio options here](https://verovio.org/javascript.xhtml). If not specified, uses these defaults:
 
 ```
 { 
@@ -31,8 +31,6 @@ The `<SelectableScore>` component accepts the following props:
   unit: 6
 }
 ```
-
-[More information on Verovio options here](https://verovio.org/javascript.xhtml).
 
 * `selectionString` (*optional*): specifies the CSS selector used by DragSelect for click-and-drag selections. Any valid CSS selector acceptable; if not specified, defaults to `.note`.
 
