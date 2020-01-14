@@ -7,10 +7,10 @@ import { scorePrevPageStatic } from 'meld-clients-core/src/actions/index';
 class PrevPageButton extends Component { 
   constructor(props) { 
     super(props);
-    this.nextPage= this.nextPage.bind(this);
+    this.prevPage = this.prevPage.bind(this);
   }
 
-  nextPage() { 
+  prevPage() { 
     this.props.scorePrevPageStatic(this.props.uri, this.props.score.pageNum, this.props.score.MEI[this.props.uri]);
   }
   

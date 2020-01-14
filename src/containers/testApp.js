@@ -23,7 +23,8 @@ export default class TestApp extends Component {
   constructor(props) { 
     super(props);
     this.state = { 
-      selection: []
+      selection: [],
+      uri: MEI_URI /* you can set this dynamically if your app requires dynamic MEI updates */
     };
     this.handleSelectionChange = this.handleSelectionChange.bind(this);
   }
@@ -42,20 +43,23 @@ export default class TestApp extends Component {
           : <span>Nothing selected</span>
         }</p>
 
+        { /* pass anything as buttonContent that you'd like to function as a clickable next page button */ }
         <NextPageButton 
-          buttonContent = { <span>Next</span> } 
-          uri = { MEI_URI }
+          buttonContent = { <span>Next</span> }
+          uri = { this.state.uri }
         />
+
+        { /* pass anything as buttonContent that you'd like to function as a clickable prev page button */ }
         <PrevPageButton 
-          buttonContent = { <span>Prev</span>} 
-          uri = { MEI_URI }
+          buttonContent = { <span>Prev</span> }
+          uri = { this.state.uri }
         />
+
         <SelectableScore 
-          uri={ MEI_URI } 
+          uri={ this.state.uri } 
           options={ vrvOptions } 
           onSelectionChange={ this.handleSelectionChange } 
           selectorString = { selectorString }
-          nextPageButton = { this.nextPageButton }
         />
       </div>
     )

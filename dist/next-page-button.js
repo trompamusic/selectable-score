@@ -7,7 +7,7 @@ import { scoreNextPageStatic } from 'meld-clients-core/src/actions/index';
 class NextPageButton extends Component { 
   constructor(props) { 
     super(props);
-    this.nextPage= this.nextPage.bind(this);
+    this.nextPage = this.nextPage.bind(this);
   }
 
   nextPage() { 
