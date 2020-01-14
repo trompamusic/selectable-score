@@ -8,7 +8,7 @@ import PrevPageButton from 'selectable-score/dist/prev-page-button.js';
 // MEI_URI: Can be a full URI, e.g. obtained from the TROMPA Contributor Environment 
 const MEI_URI = "test.mei" 
 // vrvOptions: If not supplied to <SelectableScore>, will default to predefined options
-const vrvOptions = {  //
+const vrvOptions = {  
   scale: 45,
   adjustPageHeight: 1,
   pageHeight: 2500,
