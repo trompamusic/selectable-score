@@ -48,7 +48,7 @@ The `<NextPageButton>` and `<PrevPageButton>` components are simple interaction 
 
 * `uri` (*required*): Your MEI file's URI. 
 
-## Test application
+## Demo application
 
 This repository also contains a minimal example React application integrating the selectable-score component. To run it, clone this repository, then:
 ```
