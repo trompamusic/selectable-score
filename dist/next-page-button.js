@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux' ;
 import { bindActionCreators } from 'redux';
-import { scoreNextPageStatic } from 'meld-clients-core/src/actions/index';
+import { scoreNextPageStatic } from 'meld-clients-core/lib/actions/index';
 
 class NextPageButton extends Component { 
   constructor(props) { 

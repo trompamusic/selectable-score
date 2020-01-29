@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux' ;
-import Score from 'meld-clients-core/src/containers/score';
+import Score from 'meld-clients-core/lib/containers/score';
 import DragSelect from "dragselect/dist/DragSelect";
 
 const defaultVrvOptions = {

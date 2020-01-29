@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux' ;
 import { bindActionCreators } from 'redux';
-import { scorePrevPageStatic } from 'meld-clients-core/src/actions/index';
+import { scorePrevPageStatic } from 'meld-clients-core/lib/actions/index';
 
 class PrevPageButton extends Component { 
   constructor(props) { 
