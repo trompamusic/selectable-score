@@ -80,7 +80,7 @@ class SelectableScore extends Component {
 }
 
 function mapStateToProps({ score }) {
-  return { score }
+  return { score: this.props.scoreReducer }
 }
 
 
