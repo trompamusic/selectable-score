@@ -67,11 +67,14 @@ class SelectableScore extends Component {
 
   render() { 
     return(
-      <Score 
-        uri={ this.props.uri }
-        key={ this.props.uri }
-        options={ this.state.vrvOptions }
-      />
+      React.createElement(
+        'Score',
+        { 
+          uri:  this.props.uri,  
+          key:  this.props.uri, 
+          options: this.state.vrvOptions 
+        }
+      )
     )
   }
 }
