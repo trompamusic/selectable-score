@@ -17,7 +17,7 @@
    "dependencies": {
       "babel-preset-stage-1": "^6.1.18",
       "dragselect": "^1.13.1",
-      "meld-clients-core": "oerc-music/meld-clients-core",
+      "meld-clients-core": "oerc-music/meld-clients-core#deJSXify-score",
       "prop-types": "^15.7.2",
       "react": "^0.14.3",
       "react-dom": "^0.14.3",
