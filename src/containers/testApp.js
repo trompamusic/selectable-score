@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import SelectableScore from 'selectable-score/dist/selectable-score';
-import NextPageButton from 'selectable-score/dist/next-page-button.js';
-import PrevPageButton from 'selectable-score/dist/prev-page-button.js';
+import SelectableScore from '../selectable-score';
+import NextPageButton from '../next-page-button.js';
+import PrevPageButton from '../prev-page-button.js';
 
 // Parameters for SelectableScore component
 // ****************************************
