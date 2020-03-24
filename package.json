@@ -16,17 +16,23 @@
     "@babel/preset-react": "^7.0.0"
   },
   "dependencies": {
+    "browserslist": "^4.11.0",
     "dragselect": "^1.13.1",
+    "fibers": "^4.0.2",
     "meld-clients-core": "oerc-music/meld-clients-core#updateBabelDependency",
+    "node-sass": "^4.13.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
-    "react-router-dom": "^4.3.1",
     "react-player": "^1.11.0",
-    "redux": "^3.0.4",
-    "redux-promise": "^0.5.3",
+    "react-redux": "^7.2.0",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "^3.1.1",
+    "redux": "^4.0.5",
+    "redux-promise": "^0.6.0",
     "redux-thunk": "^2.3.0",
-    "react-scripts": "^3.1.1"
+    "sass": "^1.26.3",
+    "typescript": "^3.8.3"
   },
   "browserslist": {
     "production": [
