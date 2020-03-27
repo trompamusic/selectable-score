@@ -29,12 +29,12 @@ class SelectableScore extends Component {
     }
     this.enableSelector = this.enableSelector.bind(this);
     this.scoreComponent = React.createRef();
-    this.onScoreUpdate = this.onScoreUpdate.bind(this);
-    this.observer = new MutationObserver(this.onScoreUpdate); 
+    this.handleScoreUpdate = this.handleScoreUpdate.bind(this);
+    this.observer = new MutationObserver(this.handleScoreUpdate); 
   }
 
-  onScoreUpdate() { 
-    this.props.handleScoreUpdate(
+  handleScoreUpdate() { 
+    this.props.onScoreUpdate (
       ReactDOM.findDOMNode(this.scoreComponent.current).querySelector("svg")
     );
   }

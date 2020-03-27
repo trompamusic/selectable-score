@@ -1,6 +1,6 @@
 {
   "name": "selectable-score",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "TROMPA selectable score component",
   "main": "index.js",
   "scripts": {
