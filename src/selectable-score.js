@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux' ;
 import Score from 'meld-clients-core/lib/containers/score';
 import DragSelect from "dragselect/dist/DragSelect";
+import ReactDOM from 'react-dom';
 
 const defaultVrvOptions = {
   scale: 45,
@@ -23,14 +24,24 @@ class SelectableScore extends Component {
         : defaultVrvOptions,
       selectorString: "selectorString" in this.props 
         ? this.props.selectorString
-        : defaultSelectorString
+        : defaultSelectorString,
+      scoreComponentLoaded: false
     }
     this.enableSelector = this.enableSelector.bind(this);
+    this.scoreComponent = React.createRef();
+    this.onScoreUpdate = this.onScoreUpdate.bind(this);
+    this.observer = new MutationObserver(this.onScoreUpdate); 
+  }
+
+  onScoreUpdate() { 
+    this.props.handleScoreUpdate(
+      ReactDOM.findDOMNode(this.scoreComponent.current).querySelector("svg")
+    );
   }
 
   enableSelector() {
     if(!Object.keys(this.props.score.SVG).length) {
-      console.log("Doh!");
+      console.log("Enable selector called before MEI has loaded!");
       return; // no MEI loaded yet
     }
     if (typeof this.state.selector !== "undefined") {
@@ -59,6 +70,12 @@ class SelectableScore extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    if(!prevState.scoreComponentLoaded && this.scoreComponent.current) { 
+      // first load of score component - start observing for DOM changes
+      this.setState({ "scoreComponentLoaded": true }, () => { 
+        this.observer.observe(ReactDOM.findDOMNode(this.scoreComponent.current).querySelector(".score"), {"childList": true});
+      })
+    }
     if(prevProps.score.latestRenderedPageNum !== this.props.score.latestRenderedPageNum) { 
       // page turned, re-initialise selectors 
         this.enableSelector();
@@ -66,11 +83,13 @@ class SelectableScore extends Component {
   }
 
   render() { 
+    console.log("Attempting to render score with uri: ", this.props.uri);
     return(
       <Score 
         uri={ this.props.uri }
         key={ this.props.uri }
         options={ this.state.vrvOptions }
+        ref = { this.scoreComponent }
       />
     )
   }
