@@ -83,7 +83,9 @@ class SelectableScore extends Component {
     }
     if(prevProps.selectorString !== this.props.selectorString) { 
       // selector changed (e.g. from .note to .measure), re-initialise selectors
-        this.enableSelector();
+        this.setState({"selectorString": this.props.selectorString}, () => {
+          this.enableSelector();
+        });
     }
   }
 
