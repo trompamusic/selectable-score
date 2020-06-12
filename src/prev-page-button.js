@@ -14,9 +14,9 @@ class PrevPageButton extends Component {
   }
   
   render() { 
-    let buttonContent = "buttonContent" in this.props 
+    const buttonContent = "buttonContent" in this.props 
       ? this.props.buttonContent
-      : ""
+      : "";
     return(
       <div className="selectable-score-prevPageButton" onClick={this.prevPage}>
         { buttonContent }
