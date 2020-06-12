@@ -1,19 +1,20 @@
 {
   "name": "selectable-score",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "TROMPA selectable score component",
   "main": "index.js",
+  "repository": "git@github.com:trompamusic/selectable-score.git",
   "scripts": {
-    "start": "PORT=8080 react-scripts start",
+    "start": "react-scripts start",
     "build": "babel src --out-dir lib",
     "build-dev": "babel src --out-dir lib --source-maps inline"
   },
   "author": "David M. Weigl, IWK, University of Music and Performing Arts Vienna",
   "license": "BSD-3-Clause",
   "devDependencies": {
-    "@babel/cli": "^7.6.0",
-    "@babel/core": "^7.6.0",
-    "@babel/preset-react": "^7.0.0"
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-react": "^7.9.1"
   },
   "dependencies": {
     "browserslist": "^4.11.0",
