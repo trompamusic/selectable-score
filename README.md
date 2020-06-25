@@ -12,14 +12,21 @@ This component is intended to serve various score-centric applications of the [T
 
 To use the component in your project:
 
-`import SelectableScore from 'selectable-score/dist/selectable-score';`
+`import SelectableScore from 'selectable-score/lib/selectable-score';`
 
 If your application requires paging through the score, additionally import the following:
 
 ```
-import NextPageButton from 'selectable-score/dist/next-page-button';
-import PrevPageButton from 'selectable-score/dist/prev-page-button';
+import NextPageButton from 'selectable-score/lib/next-page-button';
+import PrevPageButton from 'selectable-score/lib/prev-page-button';
 ```
+
+If your application requires submission of score selections (e.g. as Web Annotations) via HTTP POST ([Solid POD compatible!](http://solidproject.org)), additionally import the following:
+
+```
+import SubmitButton from 'selectable-score/lib/submit-button';
+```
+
 
 ### SelectableScore props
 The `<SelectableScore>` component accepts the following props:
@@ -48,18 +55,18 @@ The `<NextPageButton>` and `<PrevPageButton>` components are simple interaction 
 
 * `uri` (*required*): Your MEI file's URI. 
 
+
+### SubmitButton props
+the `<SubmitButton>` component simplifies posting of selected content - e.g. in the context of a Web Annotation - via HTTP POST. This includes support for authenticated POSTing to Solid PODs. The component accepts the following props:
+
+* `buttonContent` (*optional*): Your JSX content for the button. Could be as simple as `<span>Submit!</span>`.
+* `submitUri` (*required*): The URI to POST to. If used in an authenticated Solid context (e.g. using (`solid/react-components')[http://github.com/solid/react-components] modules), this could be a location in the user's POD
+* `submitHandler` (*required*): Callback function to trigger when the button is clicked. **Expected to return a JSON object**, the contents of which forms the HTTP POST request body. 
+* `submitHandlerArgs` (*optional*): JSON object handed to the submitHandler callback when triggered.  If not supplied, an empty object will be used instead.
+
 ## Demo application
 
-This repository also contains a minimal example React application integrating the selectable-score component. To run it, clone this repository, then:
-```
-cd selectable-score
-npm install
-npm start
-```
-
-Now point your web browser at https://localhost:8080. Wait a few moments for Verovio to render the score. 
-
-Click and drag to select MEI elements (in this example, notes); hold down shift or ctrl to select discontinuous regions.
+A minimal example React application integrating the selectable-score component is available at (trompamusic/selectable-score-demo)[http://github.com/trompamusic/selectable-score-demo]. 
 
 ## Known issues
 

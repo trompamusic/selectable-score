@@ -11,10 +11,11 @@ class SubmitButton extends Component {
   }
 
   post() { 
+    let submitHandlerArgs = "submitHandlerArgs" in this.props ? this.props.submitHandlerArgs : {} ;
     this.props.postAnnotation(
       this.props.submitUri,
       "",
-      this.props.submitHandler()
+      this.props.submitHandler(submitHandlerArgs)
     )
   }
 
