@@ -30,9 +30,8 @@ class SelectableScore extends Component {
         : defaultSelectorString,
       scoreComponentLoaded: false,
       updateAnnotationContainer: this.props.updateAnnotationContainer || false,
-      annotationContainerContentToRetrieve = new Set(),
-      annotationContainerContentItems = {} 
-
+      annotationContainerContentToRetrieve: new Set(),
+      annotationContainerContentItems: {} 
     }
     this.enableSelector = this.enableSelector.bind(this);
     this.scoreComponent = React.createRef();
@@ -77,17 +76,17 @@ class SelectableScore extends Component {
     .then( response => response.json())
     .then( (data) => { 
       // fetch any contents of the container
-      let uri = annotationContainerUri;
+      let uri = this.props.annotationContainerUri;
       // ensure uri ends with slash
       uri = uri.charAt(uri.length-1) === "/" ? uri : uri + "/"
       // find json-ld description of the container itself
       const container = data.filter( x => x["@id"] === uri )[0]
-      if(container.includes(CONTAINS)) { 
-        const containerUris = new Set(
-          container.CONTAINS.map( contentItem => contentItem["@id"] )
+      if(CONTAINS in container) {
+        const contentUris = new Set(
+          container[CONTAINS].map( contentItem => contentItem["@id"] )
         )
-        this.setState({ annotationContainerContentToRetrieve: contentUris }, 
-          this.fetchAnnotationContainerContent()
+        this.setState({ annotationContainerContentToRetrieve: new Set(contentUris) }, 
+          () => { this.fetchAnnotationContainerContent() }
         )
       } else { this.props.onReceiveAnnotationContainerContent({}) }; // report empty container
     })
@@ -95,21 +94,29 @@ class SelectableScore extends Component {
   }
 
   fetchAnnotationContainerContent() { 
+    console.log("At fetchAnnotationContainerContent with content to retrieve: ", this.state.annotationContainerContentToRetrieve);
     this.state.annotationContainerContentToRetrieve.forEach((uri) => { 
-      this.setState({ annotationContainerContentToRetrieve: this.state.annotationContainerContentToRetrieve.delete(uri) }, 
-        auth.fetch(uri, {
-          mode: 'cors',
-          headers: { 'Accept': 'application/ld+json' }
-        })
-        .then( response => response.json())
-        .then( (data) => { 
-          this.setState({ annotationContainerContentItems: 
-            ...this.state.annotationContainerContentItems, [uri]: data  // immutable update
+      console.log("Looking at uri ", uri)
+      console.log("about to try delete", this.state.annotationContainerContentToRetrieve);
+      this.setState({ annotationContainerContentToRetrieve: new Set(this.state.annotationContainerContentToRetrieve).delete(uri) }, 
+        () => { auth.fetch(uri, {
+            mode: 'cors',
+            headers: { 'Accept': 'application/ld+json' }
           })
+          .then( response => response.json())
+          .then( (data) => { 
+            this.setState({ annotationContainerContentItems: 
+            { ...this.state.annotationContainerContentItems, [uri]: data }  // immutable update
+            })
+          })
+        .catch( (err) => { 
+          console.error("Error retrieving ", uri, ": ", err)
+        })
+        }
+      )
+    })
+  }
         
-
-
-
   
   componentDidMount() { 
     // horrible hack to allow SVG to be loaded into DOM first
@@ -129,6 +136,11 @@ class SelectableScore extends Component {
       } else { 
         console.error("Specified annotation container URI without onReceiveAnnotationContainerContent callback");
       }
+    }
+
+    if(prevState.annotationContainerContentToRetrieve.size && ! this.state.annotationContainerContentToRetrieve.size) {
+      // finished retrieving annotation container content
+      this.props.onReceiveAnnotationContainerContent(this.state.annotationContainerContentItems)
     }
     if(!prevState.scoreComponentLoaded && this.scoreComponent.current) { 
       // first load of score component - start observing for DOM changes
