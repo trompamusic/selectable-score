@@ -29,10 +29,7 @@ class SelectableScore extends Component {
         ? this.props.selectorString
         : defaultSelectorString,
       scoreComponentLoaded: false,
-      updateAnnotationContainer: this.props.updateAnnotationContainer || false,
-      annotationContainerContentToRetrieve: new Set(),
-      annotationContainerContentRetrieved: new Set(),
-      annotationContainerContentItems: {} 
+      annotationContainerContentToRetrieve: []
     }
     this.enableSelector = this.enableSelector.bind(this);
     this.scoreComponent = React.createRef();
@@ -83,10 +80,8 @@ class SelectableScore extends Component {
       // find json-ld description of the container itself
       const container = data.filter( x => x["@id"] === uri )[0]
       if(CONTAINS in container) {
-        const contentUris = new Set(
-          container[CONTAINS].map( contentItem => contentItem["@id"] )
-        )
-        this.setState({ annotationContainerContentToRetrieve: new Set(contentUris) }, 
+        const contentUris = container[CONTAINS].map( contentItem => contentItem["@id"]).filter(uri => !uri.endsWith(".lock/")) // skip SOLID lock files
+        this.setState({ annotationContainerContentToRetrieve: contentUris }, 
           () => { this.fetchAnnotationContainerContent() }
         )
       } else { this.props.onReceiveAnnotationContainerContent({}) }; // report empty container
@@ -95,34 +90,24 @@ class SelectableScore extends Component {
   }
 
   fetchAnnotationContainerContent() { 
-    this.state.annotationContainerContentToRetrieve.forEach((uri) => { 
-      if(uri.endsWith(".lock/")) { 
-        return; // skip SOLID lock files
-      }
-      // TODO potential race condition ahead? Attempt to rewrite as atomic update
-      let updatedAnnotationContainerContentRetrieved = new Set(this.state.annotationContainerContentRetrieved);
-      updatedAnnotationContainerContentRetrieved.add(uri);
-      console.log("Immediately before", updatedAnnotationContainerContentRetrieved);
-      this.setState({ annotationContainerContentRetrieved: updatedAnnotationContainerContentRetrieved }, 
-        () => { 
-            console.log("Immediately after: ", this.state.annotationContainerContentRetrieved);
-            auth.fetch(uri, {
-            mode: 'cors',
-            headers: { 'Accept': 'application/ld+json' }
-          })
-          .then( response => response.json())
-          .then( (data) => { 
-            this.setState({ annotationContainerContentItems: 
-              { ...this.state.annotationContainerContentItems, [uri]: data }  // immutable update
-            }, () => { 
-              console.log("Have: ", this.state.annotationContainerContentRetrieved, "Want: ", this.state.annotationContainerContentToRetrieve) }) 
-          })
-        .catch( (err) => { 
-          console.error("Error retrieving ", uri, ": ", err)
+    console.log("Attempting iteration", this.state.annotationContainerContentToRetrieve)
+    Promise.all(this.state.annotationContainerContentToRetrieve.map( uri => 
+        auth.fetch(uri, {
+          mode: 'cors',
+          headers: { 'Accept': 'application/ld+json' }
         })
-        }
-      )
-    })
+    )).then( responses => {
+       Promise.all(
+         responses.map( response => response.json())
+       ).then( content => { 
+         // inject content URIs into JSON-LD objects
+         content.forEach( (c, ix) => { 
+           c["@id"] = this.state.annotationContainerContentToRetrieve[ix]
+         });
+         // and callback to the application
+         this.props.onReceiveAnnotationContainerContent(content)
+       }).catch( err => console.error("Error extracting response json: ", err))
+    }).catch( err => console.log("Error retrieving content: ", err));
   }
         
   
@@ -133,7 +118,7 @@ class SelectableScore extends Component {
       this.enableSelector();
     }, 1000);
     // handle fetching of annotation container contents
-    if(this.props.annotationContainerUri && this.state.updateAnnotationContainer) { 
+    if(this.props.annotationContainerUri && this.props.updateAnnotationContainer) { 
       if(this.props.onReceiveAnnotationContainerContent) { 
         this.fetchAnnotationContainer()
       } else { 
@@ -143,28 +128,15 @@ class SelectableScore extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if(this.props.annotationContainerUri && !prevState.updateAnnotationContainer && this.state.updateAnnotationContainer) { 
+    if(this.props.annotationContainerUri && !prevProps.updateAnnotationContainer && this.props.updateAnnotationContainer) { 
       if(this.props.onReceiveAnnotationContainerContent) { 
         // update annotation container flag toggled on, clear state and refetch
         this.setState({ 
-          annotationContainerContentToRetrieve: new Set(),
-          annotationContainerContentRetrieved: new Set(),
-          annotationContainerContentItems: {} 
+          annotationContainerContentToRetrieve: []
         }, this.fetchAnnotationContainer());
       } else { 
         console.error("Specified annotation container URI without onReceiveAnnotationContainerContent callback");
       }
-    }
-
-    //if(this.state.annotationContainerContentToRetrieve.size === this.state.annotationContainerContentRetrieved.size && 
-     //  this.state.annotationContainerContentToRetrieve.size > 0 && this.state.updateAnnotationContainer) {
-
-    if(prevState.annotationContainerContentToRetrieve.size < this.state.annotationContainerContentRetrieved.size) {
-      console.log("Are we done yet?", this.state.annotationContainerContentToRetrieve, this.state.annotationContainerContentRetrieved)
-      // new content retrieved. Do we have everything?
-     /* this.setState({ annotationContainerContentToRetrieve: new Set(), annotationContainerContentRetrieved: new Set() }, () => 
-        this.props.onReceiveAnnotationContainerContent(this.state.annotationContainerContentItems)
-      )*/
     }
 
     if(!prevState.scoreComponentLoaded && this.scoreComponent.current) { 

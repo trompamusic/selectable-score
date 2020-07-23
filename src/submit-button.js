@@ -15,7 +15,8 @@ class SubmitButton extends Component {
     this.props.postAnnotation(
       this.props.submitUri,
       "",
-      this.props.submitHandler(submitHandlerArgs)
+      this.props.submitHandler(submitHandlerArgs), 
+      this.props.onResponse()
     )
   }
 
