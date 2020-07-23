@@ -31,7 +31,8 @@ import SubmitButton from 'selectable-score/lib/submit-button';
 ### SelectableScore props
 The `<SelectableScore>` component accepts the following props:
 
-* `vrvOptions` (*optional*): a JSON object containing layout options to pass on to Verovio. [More information on Verovio options here](https://verovio.org/javascript.xhtml). If not specified, uses these defaults:
+* `uri` (*required*): Your MEI file's URI. 
+* `options` (*optional*): a JSON object containing layout options to pass on to Verovio. [More information on Verovio options here](https://verovio.org/javascript.xhtml). If not specified, uses these defaults:
 
 ```
 { 
@@ -43,10 +44,18 @@ The `<SelectableScore>` component accepts the following props:
   unit: 6
 }
 ```
+* `onScoreUpdate` (*optional*): a callback to trigger when the score SVG is updated, i.e. when a layout change or a page flip has happened
 
 * `selectionString` (*optional*): specifies the CSS selector used by DragSelect for click-and-drag selections. Any valid CSS selector acceptable; if not specified, defaults to `.note`.
 
 * `onSelectionChange` (*required*): a callback to your application's selection handler. 
+
+* `annotationContainerUri` (*optional*): URI of an LDP (e.g. Solid) container with annotations to be retrieved for this score
+
+* `toggleAnnotationRetrieval` (*optional*): Boolean flag to trigger retrieval of annotation content from annotationContainerUri
+
+* `onReceiveAnotationContainerContent` (*optional*): Callback to trigger on retrieval of annotation content from annotationContainerUri
+
 
 ### NextPageButton and PrevPageButton props
 The `<NextPageButton>` and `<PrevPageButton>` components are simple interaction wrappers that attach a click handler for MELD-score-based paging to any HTML (JSX) elements you care to provide -- typically, "Next page" and "Previous page" buttons. They accept the following props: 
@@ -63,6 +72,7 @@ the `<SubmitButton>` component simplifies posting of selected content - e.g. in 
 * `submitUri` (*required*): The URI to POST to. If used in an authenticated Solid context (e.g. using (`solid/react-components')[http://github.com/solid/react-components] modules), this could be a location in the user's POD
 * `submitHandler` (*required*): Callback function to trigger when the button is clicked. **Expected to return a JSON object**, the contents of which forms the HTTP POST request body. 
 * `submitHandlerArgs` (*optional*): JSON object handed to the submitHandler callback when triggered.  If not supplied, an empty object will be used instead.
+* `onResponse` (*optional*): Callback to trigger when the POST is completed. Your application may want to set the <SelectableScore> component's toggleAnnotationRetrieval to true when this happens, so that newly POSTed annotations can be retrieved and rendered.
 
 ## Demo application
 

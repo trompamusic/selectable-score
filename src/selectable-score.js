@@ -38,9 +38,10 @@ class SelectableScore extends Component {
   }
 
   handleScoreUpdate() { 
-    this.props.onScoreUpdate (
-      ReactDOM.findDOMNode(this.scoreComponent.current).querySelector("svg")
-    );
+    typeof this.props.onScoreUpdate === "function" &&
+      this.props.onScoreUpdate (
+        ReactDOM.findDOMNode(this.scoreComponent.current).querySelector("svg")
+      );
   }
 
   enableSelector() {
@@ -118,7 +119,7 @@ class SelectableScore extends Component {
       this.enableSelector();
     }, 1000);
     // handle fetching of annotation container contents
-    if(this.props.annotationContainerUri && this.props.updateAnnotationContainer) { 
+    if(this.props.annotationContainerUri && this.props.toggleAnnotationRetrieval) { 
       if(this.props.onReceiveAnnotationContainerContent) { 
         this.fetchAnnotationContainer()
       } else { 
@@ -128,7 +129,7 @@ class SelectableScore extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if(this.props.annotationContainerUri && !prevProps.updateAnnotationContainer && this.props.updateAnnotationContainer) { 
+    if(this.props.annotationContainerUri && !prevProps.toggleAnnotationRetrieval && this.props.toggleAnnotationRetrieval) { 
       if(this.props.onReceiveAnnotationContainerContent) { 
         // update annotation container flag toggled on, clear state and refetch
         this.setState({ 
