@@ -31,6 +31,7 @@ class SelectableScore extends Component {
       scoreComponentLoaded: false,
       updateAnnotationContainer: this.props.updateAnnotationContainer || false,
       annotationContainerContentToRetrieve: new Set(),
+      annotationContainerContentRetrieved: new Set(),
       annotationContainerContentItems: {} 
     }
     this.enableSelector = this.enableSelector.bind(this);
@@ -94,20 +95,27 @@ class SelectableScore extends Component {
   }
 
   fetchAnnotationContainerContent() { 
-    console.log("At fetchAnnotationContainerContent with content to retrieve: ", this.state.annotationContainerContentToRetrieve);
     this.state.annotationContainerContentToRetrieve.forEach((uri) => { 
-      console.log("Looking at uri ", uri)
-      console.log("about to try delete", this.state.annotationContainerContentToRetrieve);
-      this.setState({ annotationContainerContentToRetrieve: new Set(this.state.annotationContainerContentToRetrieve).delete(uri) }, 
-        () => { auth.fetch(uri, {
+      if(uri.endsWith(".lock/")) { 
+        return; // skip SOLID lock files
+      }
+      // TODO potential race condition ahead? Attempt to rewrite as atomic update
+      let updatedAnnotationContainerContentRetrieved = new Set(this.state.annotationContainerContentRetrieved);
+      updatedAnnotationContainerContentRetrieved.add(uri);
+      console.log("Immediately before", updatedAnnotationContainerContentRetrieved);
+      this.setState({ annotationContainerContentRetrieved: updatedAnnotationContainerContentRetrieved }, 
+        () => { 
+            console.log("Immediately after: ", this.state.annotationContainerContentRetrieved);
+            auth.fetch(uri, {
             mode: 'cors',
             headers: { 'Accept': 'application/ld+json' }
           })
           .then( response => response.json())
           .then( (data) => { 
             this.setState({ annotationContainerContentItems: 
-            { ...this.state.annotationContainerContentItems, [uri]: data }  // immutable update
-            })
+              { ...this.state.annotationContainerContentItems, [uri]: data }  // immutable update
+            }, () => { 
+              console.log("Have: ", this.state.annotationContainerContentRetrieved, "Want: ", this.state.annotationContainerContentToRetrieve) }) 
           })
         .catch( (err) => { 
           console.error("Error retrieving ", uri, ": ", err)
@@ -123,25 +131,42 @@ class SelectableScore extends Component {
     // TODO fix using Mutation Observers
     setTimeout(() => {
       this.enableSelector();
-    }, 1000)
-
-  }
-
-  componentDidUpdate(prevProps, prevState) {
+    }, 1000);
     // handle fetching of annotation container contents
     if(this.props.annotationContainerUri && this.state.updateAnnotationContainer) { 
-      console.log("Fetching anno container", this.props.annotationContainerUri);
       if(this.props.onReceiveAnnotationContainerContent) { 
         this.fetchAnnotationContainer()
       } else { 
         console.error("Specified annotation container URI without onReceiveAnnotationContainerContent callback");
       }
     }
+  }
 
-    if(prevState.annotationContainerContentToRetrieve.size && ! this.state.annotationContainerContentToRetrieve.size) {
-      // finished retrieving annotation container content
-      this.props.onReceiveAnnotationContainerContent(this.state.annotationContainerContentItems)
+  componentDidUpdate(prevProps, prevState) {
+    if(this.props.annotationContainerUri && !prevState.updateAnnotationContainer && this.state.updateAnnotationContainer) { 
+      if(this.props.onReceiveAnnotationContainerContent) { 
+        // update annotation container flag toggled on, clear state and refetch
+        this.setState({ 
+          annotationContainerContentToRetrieve: new Set(),
+          annotationContainerContentRetrieved: new Set(),
+          annotationContainerContentItems: {} 
+        }, this.fetchAnnotationContainer());
+      } else { 
+        console.error("Specified annotation container URI without onReceiveAnnotationContainerContent callback");
+      }
     }
+
+    //if(this.state.annotationContainerContentToRetrieve.size === this.state.annotationContainerContentRetrieved.size && 
+     //  this.state.annotationContainerContentToRetrieve.size > 0 && this.state.updateAnnotationContainer) {
+
+    if(prevState.annotationContainerContentToRetrieve.size < this.state.annotationContainerContentRetrieved.size) {
+      console.log("Are we done yet?", this.state.annotationContainerContentToRetrieve, this.state.annotationContainerContentRetrieved)
+      // new content retrieved. Do we have everything?
+     /* this.setState({ annotationContainerContentToRetrieve: new Set(), annotationContainerContentRetrieved: new Set() }, () => 
+        this.props.onReceiveAnnotationContainerContent(this.state.annotationContainerContentItems)
+      )*/
+    }
+
     if(!prevState.scoreComponentLoaded && this.scoreComponent.current) { 
       // first load of score component - start observing for DOM changes
       this.setState({ "scoreComponentLoaded": true }, () => { 
