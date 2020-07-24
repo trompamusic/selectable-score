@@ -8,6 +8,12 @@ class SubmitButton extends Component {
   constructor(props) { 
     super(props);
     this.post = this.post.bind(this);
+    this.defaultOnResponse= this.defaultOnResponse.bind(this);
+  }
+
+  defaultOnResponse(resp) { 
+    // overwritten if onResponse supplied in props
+    console.log("Received response: ", resp)
   }
 
   post() { 
@@ -16,7 +22,7 @@ class SubmitButton extends Component {
       this.props.submitUri,
       "",
       this.props.submitHandler(submitHandlerArgs), 
-      this.props.onResponse()
+      typeof this.props.onResponse === "function" ? this.props.onResponse : 
     )
   }
 
