@@ -22,7 +22,7 @@ class SubmitButton extends Component {
       this.props.submitUri,
       "",
       this.props.submitHandler(submitHandlerArgs), 
-      typeof this.props.onResponse === "function" ? this.props.onResponse : 
+      typeof this.props.onResponse === "function" ? this.props.onResponse : this.defaultOnResponse
     )
   }
 
