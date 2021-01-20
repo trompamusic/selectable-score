@@ -52,19 +52,23 @@ class SelectableScore extends Component {
     if (typeof this.state.selector !== "undefined") {
       this.state.selector.stop();
     }
-    let selector = new DragSelect({
-      selectables: document.querySelectorAll(this.state.selectorString),
-      area: document.getElementsByClassName('score')[0],
-      selectedClass: 'selected',
-      onDragStartBegin: () => {
-        document.body.classList.add('s-noselect');
-      },
-      callback: (elements) => {
-        document.body.classList.remove('s-noselect');
-        this.props.onSelectionChange(elements);
-      }
-    });
-    this.setState({selector: selector});
+    let selector;
+    if(this.state.selectorString) { 
+      selector = new DragSelect({
+        selectables: document.querySelectorAll(this.state.selectorString),
+        area: document.getElementsByClassName('score')[0],
+        selectedClass: 'selected',
+        onDragStartBegin: () => {
+          document.body.classList.add('s-noselect');
+        },
+        callback: (elements) => {
+          document.body.classList.remove('s-noselect');
+          this.props.onSelectionChange(elements);
+        }
+      });
+    }
+    // undefined if no selector string specified, otherwise a new DragSelect
+    this.setState({selector: selector}); 
   }
 
   fetchAnnotationContainer() { 
