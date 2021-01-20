@@ -53,7 +53,7 @@ class SelectableScore extends Component {
       this.state.selector.stop();
     }
     let selector;
-    if(this.state.selectorString) { 
+    if(this.state.selectorString.length) { 
       selector = new DragSelect({
         selectables: document.querySelectorAll(this.state.selectorString),
         area: document.getElementsByClassName('score')[0],
