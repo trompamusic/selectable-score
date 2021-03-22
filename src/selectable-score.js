@@ -17,6 +17,7 @@ const defaultVrvOptions = {
 }
 
 const defaultSelectorString = '.note'; 
+const defaultSelectionArea = '.score';
 
 class SelectableScore extends Component {
   constructor(props) { 
@@ -25,8 +26,11 @@ class SelectableScore extends Component {
       selectorString: "selectorString" in this.props 
         ? this.props.selectorString
         : defaultSelectorString,
+      selectionArea: "selectionArea" in this.props
+        ? this.props.selectionArea
+        : defaultSelectionArea,
       scoreComponentLoaded: false,
-      annotationContainerContentToRetrieve: []
+      annotationContainerContentToRetrieve: [],
     }
     this.enableSelector = this.enableSelector.bind(this);
     this.scoreComponent = React.createRef();
@@ -53,7 +57,7 @@ class SelectableScore extends Component {
     if(this.state.selectorString.length) { 
       selector = new DragSelect({
         selectables: document.querySelectorAll(this.state.selectorString),
-        area: document.getElementsByClassName('score')[0],
+        area: document.querySelector(this.state.selectionArea),
         selectedClass: 'selected',
         onDragStartBegin: () => {
           document.body.classList.add('s-noselect');
