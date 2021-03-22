@@ -48,7 +48,7 @@ The `<SelectableScore>` component accepts the following props:
 
 * `selectionString` (*optional*): specifies the CSS selector used by DragSelect for click-and-drag selections. Any valid CSS selector acceptable; if not specified, defaults to `.note`.
 
-* `selectionArea` (*optional*): a CSS selector used to specify the DOM element serving as the selection area for DragSelect (within which `selectionString` elements are selected when clicked-and-dragged over). If not sepcified, defaults to `.score`.
+* `selectionArea` (*optional*): a CSS selector used to specify the DOM element serving as the selection area for DragSelect (within which `selectionString` elements are selected when clicked-and-dragged over). If not specified, defaults to `.score`.
 
 * `onSelectionChange` (*required*): a callback to your application's selection handler. 
 
