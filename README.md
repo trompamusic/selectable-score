@@ -32,7 +32,7 @@ import SubmitButton from 'selectable-score/lib/submit-button';
 The `<SelectableScore>` component accepts the following props:
 
 * `uri` (*required*): Your MEI file's URI. 
-* `options` (*optional*): a JSON object containing layout options to pass on to Verovio. [More information on Verovio options here](https://verovio.org/javascript.xhtml). If not specified, uses these defaults:
+* `vrvOptions` (*optional*): a JSON object containing layout options to pass on to Verovio. [More information on Verovio options here](https://verovio.org/javascript.xhtml). If not specified, uses these defaults:
 
 ```
 { 
@@ -47,6 +47,8 @@ The `<SelectableScore>` component accepts the following props:
 * `onScoreUpdate` (*optional*): a callback to trigger when the score SVG is updated, i.e. when a layout change or a page flip has happened
 
 * `selectionString` (*optional*): specifies the CSS selector used by DragSelect for click-and-drag selections. Any valid CSS selector acceptable; if not specified, defaults to `.note`.
+
+* `selectionArea` (*optional*): a CSS selector used to specify the DOM element serving as the selection area for DragSelect (within which `selectionString` elements are selected when clicked-and-dragged over). If not sepcified, defaults to `.score`.
 
 * `onSelectionChange` (*required*): a callback to your application's selection handler. 
 
