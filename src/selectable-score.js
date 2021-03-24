@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux' ;
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import Score from 'meld-clients-core/lib/containers/score';
+import { scoreSetOptions } from 'meld-clients-core/lib/actions/index';
+
 import DragSelect from "dragselect/dist/DragSelect";
 import ReactDOM from 'react-dom';
 import auth from 'solid-auth-client';
@@ -31,6 +34,9 @@ class SelectableScore extends Component {
         : defaultSelectionArea,
       scoreComponentLoaded: false,
       annotationContainerContentToRetrieve: [],
+      vrvOptions : "vrvOptions" in this.props 
+        ? this.props.vrvOptions 
+        : defaultVrvOptions
     }
     this.enableSelector = this.enableSelector.bind(this);
     this.scoreComponent = React.createRef();
@@ -39,6 +45,7 @@ class SelectableScore extends Component {
   }
 
   handleScoreUpdate() { 
+    this.enableSelector();
     typeof this.props.onScoreUpdate === "function" &&
       this.props.onScoreUpdate (
         ReactDOM.findDOMNode(this.scoreComponent.current).querySelector("svg")
@@ -118,11 +125,6 @@ class SelectableScore extends Component {
         
   
   componentDidMount() { 
-    // horrible hack to allow SVG to be loaded into DOM first
-    // TODO fix using Mutation Observers
-    setTimeout(() => {
-      this.enableSelector();
-    }, 1000);
     // handle fetching of annotation container contents
     if(this.props.annotationContainerUri && this.props.toggleAnnotationRetrieval) { 
       if(this.props.onReceiveAnnotationContainerContent) { 
@@ -149,17 +151,19 @@ class SelectableScore extends Component {
       // first load of score component - start observing for DOM changes
       this.setState({ "scoreComponentLoaded": true }, () => { 
         this.observer.observe(ReactDOM.findDOMNode(this.scoreComponent.current).querySelector(".score"), {"childList": true});
-      })
-    }
-    if(prevProps.score.latestRenderedPageNum !== this.props.score.latestRenderedPageNum) { 
-      // page turned, re-initialise selectors 
         this.enableSelector();
+      })
     }
     if(prevProps.selectorString !== this.props.selectorString) { 
       // selector changed (e.g. from .note to .measure), re-initialise selectors
-        this.setState({"selectorString": this.props.selectorString}, () => {
-          this.enableSelector();
-        });
+      this.setState({"selectorString": this.props.selectorString}, () => this.enableSelector())
+    }
+    if("vrvOptions" in this.props && 
+        JSON.stringify(prevState.vrvOptions) !== 
+        JSON.stringify(this.props.vrvOptions)) { // options have changed
+      this.setState({vrvOptions: this.props.vrvOptions}, () => 
+        this.props.scoreSetOptions(this.props.uri, this.state.vrvOptions)
+      )
     }
   }
 
@@ -169,7 +173,7 @@ class SelectableScore extends Component {
       <Score 
         uri={ this.props.uri }
         key={ this.props.uri }
-        options={ 'vrvOptions' in this.props ? this.props.vrvOptions : defaultVrvOptions }
+        options={ this.state.vrvOptions }
         ref = { this.scoreComponent }
       />
     )
@@ -180,5 +184,11 @@ function mapStateToProps({ score }) {
   return { score }
 }
 
+function mapDispatchToProps(dispatch) { 
+  return bindActionCreators( { 
+    scoreSetOptions
+  }, dispatch)
+}
 
-export default connect(mapStateToProps,)(SelectableScore);
+
+export default connect(mapStateToProps,mapDispatchToProps)(SelectableScore);

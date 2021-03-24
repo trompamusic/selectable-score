@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "browserslist": "^4.11.0",
-    "dragselect": "^1.13.1",
+    "dragselect": "latest",
     "fibers": "^4.0.2",
     "meld-clients-core": "oerc-music/meld-clients-core#meld-dev-2.0-TROMPA",
     "node-sass": "^4.14.1",
