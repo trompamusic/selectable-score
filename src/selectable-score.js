@@ -118,7 +118,7 @@ class SelectableScore extends Component {
              console.error("Couldn't read annotation response json: ", e);
              return null
            }
-         }).filter((json) => !!foo)
+         }).filter((json) => !!json)
        ).then( content => { 
          // inject content URIs into JSON-LD objects
          content.forEach( (c, ix) => { 
