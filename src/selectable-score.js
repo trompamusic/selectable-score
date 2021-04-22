@@ -53,6 +53,7 @@ class SelectableScore extends Component {
   }
 
   enableSelector() {
+    console.log("~~ENABLE SELECTOR")
     if(!Object.keys(this.props.score.SVG).length) {
       console.log("Enable selector called before MEI has loaded!");
       return; // no MEI loaded yet
@@ -111,7 +112,13 @@ class SelectableScore extends Component {
         })
     )).then( responses => {
        Promise.all(
-         responses.map( response => response.json())
+         responses.map( response => {
+           try { return response.json() }
+           catch(e) { 
+             console.error("Couldn't read annotation response json: ", e);
+             return null
+           }
+         }).filter((json) => !!foo)
        ).then( content => { 
          // inject content URIs into JSON-LD objects
          content.forEach( (c, ix) => { 

@@ -31,11 +31,18 @@ class SubmitButton extends Component {
     const buttonContent = "buttonContent" in this.props
       ? this.props.buttonContent
       : "Submit";
-    return(
-      <div className="selectable-score-postButton" onClick={this.post}>
+    if("disabled" in this.props) { 
+      return (
+      <div className="selectable-score-postButton disabled">
         { buttonContent }
-      </div>
-    )
+      </div>)
+    } else { 
+      return(
+        <div className="selectable-score-postButton" onClick={this.post}>
+          { buttonContent }
+        </div>
+      )
+    }
   }
 }
 
