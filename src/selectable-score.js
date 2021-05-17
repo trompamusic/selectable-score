@@ -53,7 +53,6 @@ class SelectableScore extends Component {
   }
 
   enableSelector() {
-    console.log("~~ENABLE SELECTOR")
     if(!Object.keys(this.props.score.SVG).length) {
       console.log("Enable selector called before MEI has loaded!");
       return; // no MEI loaded yet
@@ -104,7 +103,6 @@ class SelectableScore extends Component {
   }
 
   fetchAnnotationContainerContent() { 
-    console.log("Attempting iteration", this.state.annotationContainerContentToRetrieve)
     Promise.all(this.state.annotationContainerContentToRetrieve.map( uri => 
         auth.fetch(uri, {
           mode: 'cors',
@@ -155,8 +153,13 @@ class SelectableScore extends Component {
     }
 
     if(!prevState.scoreComponentLoaded && this.scoreComponent.current) { 
-      // first load of score component - start observing for DOM changes
+      // first load of score component - run onScoreReady callback if provided, and start observing for DOM changes
       this.setState({ "scoreComponentLoaded": true }, () => { 
+        typeof this.props.onScoreReady === "function" &&
+          this.props.onScoreReady(
+            ReactDOM.findDOMNode(this.scoreComponent.current).querySelector("svg"),
+            this.props.score.vrvTk
+          );
         this.observer.observe(ReactDOM.findDOMNode(this.scoreComponent.current).querySelector(".score"), {"childList": true});
         this.enableSelector();
       })
