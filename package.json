@@ -20,7 +20,7 @@
     "browserslist": "^4.11.0",
     "dragselect": "latest",
     "fibers": "^4.0.2",
-    "meld-clients-core": "oerc-music/meld-clients-core#meld-2.0-RC1",
+    "meld-clients-core": "oerc-music/meld-clients-core",
     "node-sass": "^4.14.1",
     "prop-types": "^15.7.2",
     "react": "^16.0.0",
