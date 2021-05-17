@@ -44,7 +44,7 @@ The `<SelectableScore>` component accepts the following props:
   unit: 6
 }
 ```
-* `onScoreReady` (*optional*): a callback to trigger when the score SVG is initially rendered. Received two arguments: the score SVG element, and a reference to the loaded Verovio toolkit. 
+* `onScoreReady` (*optional*): a callback to trigger when the score SVG is initially rendered. Receives two arguments: the score SVG element, and a reference to the loaded Verovio toolkit. 
 
 * `onScoreUpdate` (*optional*): a callback to trigger when the score SVG is updated, i.e. when a layout change or a page flip has happened. Receives the updated score SVG element as an argument.
 
