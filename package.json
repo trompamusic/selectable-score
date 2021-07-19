@@ -21,18 +21,14 @@
     "dragselect": "latest",
     "fibers": "^4.0.2",
     "meld-clients-core": "oerc-music/meld-clients-core",
-    "node-sass": "^4.14.1",
     "prop-types": "^15.7.2",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "react-player": "^1.11.0",
     "react-redux": "^7.2.0",
     "react-scripts": "^4.0.1",
     "redux": "^4.0.5",
     "redux-promise": "^0.6.0",
-    "redux-thunk": "^2.3.0",
-    "sass": "^1.26.3",
-    "typescript": "^3.8.3"
+    "redux-thunk": "^2.3.0"
   },
   "browserslist": {
     "production": [
