@@ -44,7 +44,9 @@ The `<SelectableScore>` component accepts the following props:
   unit: 6
 }
 ```
-* `onScoreUpdate` (*optional*): a callback to trigger when the score SVG is updated, i.e. when a layout change or a page flip has happened
+* `onScoreReady` (*optional*): a callback to trigger when the score SVG is initially rendered. Receives two arguments: the score SVG element, and a reference to the loaded Verovio toolkit. 
+
+* `onScoreUpdate` (*optional*): a callback to trigger when the score SVG is updated, i.e. when a layout change or a page flip has happened. Receives the updated score SVG element as an argument.
 
 * `selectionString` (*optional*): specifies the CSS selector used by DragSelect for click-and-drag selections. Any valid CSS selector acceptable; if not specified, defaults to `.note`.
 
