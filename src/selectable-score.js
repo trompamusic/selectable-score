@@ -6,7 +6,7 @@ import { scoreSetOptions } from 'meld-clients-core/lib/actions/index';
 
 import DragSelect from "dragselect/dist/DragSelect";
 import ReactDOM from 'react-dom';
-import auth from 'solid-auth-client';
+import { fetch } from "@inrupt/solid-client-authn-browser";
 
 const CONTAINS = "http://www.w3.org/ns/ldp#contains"
 
@@ -80,7 +80,7 @@ class SelectableScore extends Component {
   }
 
   fetchAnnotationContainer() { 
-    auth.fetch(this.props.annotationContainerUri, {
+    fetch(this.props.annotationContainerUri, {
       mode: 'cors',
       headers: { 'Accept': 'application/ld+json' }
     })
@@ -104,7 +104,7 @@ class SelectableScore extends Component {
 
   fetchAnnotationContainerContent() { 
     Promise.all(this.state.annotationContainerContentToRetrieve.map( uri => 
-        auth.fetch(uri, {
+        fetch(uri, {
           mode: 'cors',
           headers: { 'Accept': 'application/ld+json' }
         })
@@ -154,15 +154,18 @@ class SelectableScore extends Component {
 
     if(!prevState.scoreComponentLoaded && this.scoreComponent.current) { 
       // first load of score component - run onScoreReady callback if provided, and start observing for DOM changes
-      this.setState({ "scoreComponentLoaded": true }, () => { 
-        typeof this.props.onScoreReady === "function" &&
-          this.props.onScoreReady(
-            ReactDOM.findDOMNode(this.scoreComponent.current).querySelector("svg"),
-            this.props.score.vrvTk
-          );
-        this.observer.observe(ReactDOM.findDOMNode(this.scoreComponent.current).querySelector(".score"), {"childList": true});
-        this.enableSelector();
-      })
+      const svgElement = ReactDOM.findDOMNode(this.scoreComponent.current).querySelector("svg");
+      if(svgElement) { 
+        this.setState({ "scoreComponentLoaded": true }, () => { 
+          typeof this.props.onScoreReady === "function" &&
+            this.props.onScoreReady(
+              svgElement,
+              this.props.score.vrvTk
+            );
+          this.observer.observe(ReactDOM.findDOMNode(this.scoreComponent.current).querySelector(".score"), {"childList": true});
+          this.enableSelector();
+        })
+      }
     }
     if(prevProps.selectorString !== this.props.selectorString) { 
       // selector changed (e.g. from .note to .measure), re-initialise selectors
