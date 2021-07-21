@@ -21,7 +21,7 @@
     "browserslist": "^4.11.0",
     "dragselect": "latest",
     "fibers": "^4.0.2",
-    "meld-clients-core": "oerc-music/meld-clients-core",
+    "meld-clients-core": "oerc-music/meld-clients-core#new-solid-auth-tooling",
     "prop-types": "^15.7.2",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
